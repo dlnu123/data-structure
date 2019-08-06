@@ -1,5 +1,7 @@
 package structure.tree;
 
+import java.util.Stack;
+
 /**
  * @Description
  * @Author wangliang
@@ -19,55 +21,135 @@ public class TreeTraverse {
 
         TreeNode treeNode1 = new TreeNode(1, treeNode2, treeNode3);
 
-        System.out.print("前序遍历结果：");
-        pre(treeNode1);
+        System.out.print("前序遍历结果（递归版）：");
+        preRecursive(treeNode1);
         System.out.println();
-        System.out.print("中序遍历结果：");
-        mid(treeNode1);
+        System.out.print("前序遍历结果（非递归）：");
+        preNotRecursive(treeNode1);
+        System.out.println("\n");
+        System.out.print("中序遍历结果（递归版）：");
+        midRecursive(treeNode1);
         System.out.println();
-        System.out.print("后序遍历结果：");
-        last(treeNode1);
+        System.out.print("中序遍历结果（非递归）：");
+        midNotRecursive(treeNode1);
+        System.out.println("\n");
+        System.out.print("后序遍历结果（递归版）：");
+        postRecursive(treeNode1);
+        System.out.println();
+        System.out.print("后序遍历结果（非递归）：");
+        postNotRecursive(treeNode1);
     }
 
     /**
-     * 前序遍历
+     * 前序遍历(递归版)
      * @param root
      */
-    private static void pre(TreeNode root) {
+    private static void preRecursive(TreeNode root) {
         System.out.print(root.getData() + "  ");
         if (root.getLeft() != null) {
-            pre(root.getLeft());
+            preRecursive(root.getLeft());
         }
         if (root.getRight() != null) {
-            pre(root.getRight());
-        }
-    }
-
-    /**
-     * 中序遍历
-     * @param root
-     */
-    private static void mid(TreeNode root) {
-        if (root.getLeft() != null) {
-            mid(root.getLeft());
-        }
-        System.out.print(root.getData() + "  ");
-        if (root.getRight() != null) {
-            mid(root.getRight());
+            preRecursive(root.getRight());
         }
     }
 
     /**
-     * 后序遍历
+     * 前序遍历(非递归版)
      * @param root
      */
-    private static void last(TreeNode root) {
-        if (root.getLeft() != null) {
-            last(root.getLeft());
+    private static void preNotRecursive(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+
+        if (root == null) {
+            return;
         }
-        if (root.getRight() != null) {
-            last(root.getRight());
+
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode treeNode = stack.pop();
+            System.out.printf(treeNode.getData() + "  ");
+            if (treeNode.getRight() != null) {
+                stack.push(treeNode.getRight());
+            }
+            if (treeNode.getLeft() != null) {
+                stack.push(treeNode.getLeft());
+            }
+        }
+    }
+
+    /**
+     * 中序遍历(递归版)
+     * @param root
+     */
+    private static void midRecursive(TreeNode root) {
+        if (root.getLeft() != null) {
+            midRecursive(root.getLeft());
         }
         System.out.print(root.getData() + "  ");
+        if (root.getRight() != null) {
+            midRecursive(root.getRight());
+        }
+    }
+
+    /**
+     * 中序遍历(非递归版)
+     * @param root
+     */
+    private static void midNotRecursive(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+
+        if (root == null) {
+            return;
+        }
+
+        stack.push(root);
+        TreeNode temp = root;
+        while (!stack.isEmpty()) {
+            if (temp.getLeft() != null) {
+                stack.push(temp.getLeft());
+                temp = temp.getLeft();
+            } else {
+                temp = stack.pop();
+                System.out.print(temp.getData() + "  ");
+                if (temp.getRight() != null) {
+                    stack.push(temp.getRight());
+                    temp = temp.getRight();
+                }
+            }
+        }
+    }
+
+    /**
+     * 后序遍历(递归版)
+     * @param root
+     */
+    private static void postRecursive(TreeNode root) {
+        if (root.getLeft() != null) {
+            postRecursive(root.getLeft());
+        }
+        if (root.getRight() != null) {
+            postRecursive(root.getRight());
+        }
+        System.out.print(root.getData() + "  ");
+    }
+
+    /**
+     * 后序遍历(非递归版)
+     * @param root
+     */
+    private static void postNotRecursive(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+
+        if (root == null) {
+            return;
+        }
+
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            if (root.getLeft() != null) {
+
+            }
+        }
     }
 }
